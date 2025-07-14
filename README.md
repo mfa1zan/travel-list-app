@@ -12,7 +12,7 @@ This is a simple React app to help you track what to pack and what’s already p
 - Mark items as packed/unpacked
 - Remove individual items
 - Clear the full list
-- View simple packing stats
+- View simple packing stats.
 
 ## 🧠 Concepts Practiced
 
