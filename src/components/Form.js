@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "../supabaseClient";
 
 export default function Form({ onAddItems }) {
 
@@ -7,16 +8,34 @@ export default function Form({ onAddItems }) {
 
 
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-
+    
     if (!description) return;
-    const newItem = { description, quantity, id: Date.now(), packed: false };
-    console.log(newItem);
+
+    const { data, error } = await supabase
+  .from('items')
+  .insert([{ description, quantity, packed: false }])
+  .select()
+  .single();
+
+
+    if(error) {
+      console.log(error)
+      return 
+    }
 
     setDescription("");
     setQuantity(1);
-    onAddItems(newItem);
+    onAddItems(data);
+
+
+    // const newItem = { description, quantity, id: Date.now(), packed: false };
+    // console.log(newItem);
+
+    // setDescription("");
+    // setQuantity(1);
+    // onAddItems(newItem);
   }
 
   return (<form className="add-form" onSubmit={handleSubmit}>
